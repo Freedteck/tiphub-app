@@ -3,7 +3,7 @@ import Benefit from "~~/components/Benefit";
 import CallToAction from "~~/components/Cta";
 import Features from "~~/components/Features";
 import Hero from "~~/components/Hero";
-import HowItWorks from "~~/components/scaffold-eth/HowItWorks";
+import HowItWorks from "~~/components/HowItWorks";
 
 const Home: NextPage = () => {
   return (
