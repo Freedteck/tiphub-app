@@ -1,6 +1,19 @@
-import { PlusIcon } from "@heroicons/react/24/outline";
+"use client";
 
-const resources = [
+import { useEffect, useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import NewResources from "~~/components/NewResources";
+
+interface Resource {
+  id: number;
+  title: string;
+  description: string;
+  link: string;
+  contributor: string;
+  tipsReceived: number;
+}
+
+const initialResources = [
   {
     id: 1,
     title: "Resource 1",
@@ -53,11 +66,37 @@ const resources = [
 ];
 
 const Resources = () => {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [showNewResourceForm, setShowNewResourceForm] = useState(false);
+
+  useEffect(() => {
+    setResources(initialResources);
+  }, []);
+
+  const handleCreateResource = () => {
+    setShowNewResourceForm(true);
+  };
+
+  const handleAddResource = (newResource: Omit<Resource, "id" | "tipsReceived">) => {
+    setResources(prevResources => [
+      ...prevResources,
+      {
+        id: prevResources.length + 1,
+        tipsReceived: 0,
+        ...newResource,
+      },
+    ]);
+    setShowNewResourceForm(false);
+  };
+
   return (
     <main className="p-6 flex flex-col gap-8">
       <div className="flex justify-between gap-8">
         <h2 className="font-bold text-3xl">Resources</h2>
-        <button className="bg-accent text-accent-content shadow px-6 py-2 rounded-lg hover:bg-accent-content hover:text-accent transition flex gap-2">
+        <button
+          className="bg-accent text-accent-content shadow px-6 py-2 rounded-lg hover:bg-accent-content hover:text-accent transition flex gap-2"
+          onClick={handleCreateResource}
+        >
           <PlusIcon className="h-6 w-6" />
           Create
         </button>
@@ -67,24 +106,19 @@ const Resources = () => {
         {resources.map(resource => (
           <li key={resource.id} className="bg-neutral border shadow rounded-lg p-8 hover:shadow-xl transition">
             <h3 className="text-2xl font-semibold">{resource.title}</h3>
-
             <p className="text-sm">{resource.description}</p>
-
             <div className="flex justify-between items-center mt-4">
-              <p className="text-sm text-gray-500">By: {resource.contributor}</p>
+              <p className="text-sm text-gray-600">By: {resource.contributor}</p>
             </div>
-
-            <a
-              href={resource.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary underline mt-2 inline-block"
-            >
+            <a href={`resources/${resource.id}`} className="text-primary underline mt-2 inline-block">
               View More &rarr;
             </a>
           </li>
         ))}
       </ul>
+      {showNewResourceForm && (
+        <NewResources closeForm={() => setShowNewResourceForm(false)} addResource={handleAddResource} />
+      )}
     </main>
   );
 };
