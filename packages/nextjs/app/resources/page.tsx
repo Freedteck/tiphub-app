@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import NewResources from "~~/components/NewResources";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 interface Resource {
   id: number;
@@ -13,65 +14,24 @@ interface Resource {
   tipsReceived: number;
 }
 
-const initialResources = [
-  {
-    id: 1,
-    title: "Resource 1",
-    description: "This is a great resource for learning JavaScript.",
-    link: "https://example.com/resource-1",
-    contributor: "0x1234...abcd",
-    tipsReceived: 1.2,
-  },
-  {
-    id: 2,
-    title: "Resource 2",
-    description: "An excellent guide for mastering React.",
-    link: "https://example.com/resource-2",
-    contributor: "0x5678...efgh",
-    tipsReceived: 0.8,
-  },
-  {
-    id: 3,
-    title: "Resource 3",
-    description: "A must-read for anyone interested in blockchain development.",
-    link: "https://example.com/resource-3",
-    contributor: "0x9abc...ijkl",
-    tipsReceived: 2.5,
-  },
-  {
-    id: 4,
-    title: "Resource 4",
-    description: "A comprehensive tutorial on building web3 applications.",
-    link: "https://example.com/resource-4",
-    contributor: "0xdef0...mnop",
-    tipsReceived: 1.0,
-  },
-  {
-    id: 5,
-    title: "Resource 5",
-    description: "Learn how to deploy smart contracts on Ethereum.",
-    link: "https://example.com/resource-5",
-    contributor: "0x1234...abcd",
-    tipsReceived: 1.8,
-  },
-  {
-    id: 6,
-    title: "Resource 6",
-    description: "A collection of useful tools for frontend developers.",
-    link: "https://example.com/resource-6",
-    contributor: "0x5678...efgh",
-    tipsReceived: 0.5,
-  },
-  // Add more resources as needed
-];
-
 const Resources = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [showNewResourceForm, setShowNewResourceForm] = useState(false);
+  const { data } = useScaffoldReadContract({
+    contractName: "TipHub",
+    functionName: "getAllResources",
+  });
 
   useEffect(() => {
-    setResources(initialResources);
-  }, []);
+    if (data) {
+      const modifiedDataWithId = data.map((dataItem: any, index: number) => {
+        dataItem["id"] = index + 1;
+        return dataItem;
+      });
+
+      setResources(modifiedDataWithId);
+    }
+  }, [data]);
 
   const handleCreateResource = () => {
     setShowNewResourceForm(true);

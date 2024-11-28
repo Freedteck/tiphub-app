@@ -1,3 +1,5 @@
+"use client";
+
 import type { NextPage } from "next";
 import Benefit from "~~/components/Benefit";
 import CallToAction from "~~/components/Cta";

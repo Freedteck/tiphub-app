@@ -5,15 +5,343 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  11155111: {
+  // 11155111: {
+  //   TipHub: {
+  //     address: "0x2709132EC82DCae4B5c85034D76ac912237c8C13",
+  //     abi: [
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "address",
+  //             name: "_usdeTokenAddress",
+  //             type: "address",
+  //           },
+  //         ],
+  //         stateMutability: "nonpayable",
+  //         type: "constructor",
+  //       },
+  //       {
+  //         anonymous: false,
+  //         inputs: [
+  //           {
+  //             indexed: true,
+  //             internalType: "uint256",
+  //             name: "resourceId",
+  //             type: "uint256",
+  //           },
+  //           {
+  //             indexed: true,
+  //             internalType: "address",
+  //             name: "contributor",
+  //             type: "address",
+  //           },
+  //           {
+  //             indexed: false,
+  //             internalType: "string",
+  //             name: "contentHash",
+  //             type: "string",
+  //           },
+  //         ],
+  //         name: "ResourceShared",
+  //         type: "event",
+  //       },
+  //       {
+  //         anonymous: false,
+  //         inputs: [
+  //           {
+  //             indexed: true,
+  //             internalType: "uint256",
+  //             name: "resourceId",
+  //             type: "uint256",
+  //           },
+  //           {
+  //             indexed: true,
+  //             internalType: "address",
+  //             name: "tipper",
+  //             type: "address",
+  //           },
+  //           {
+  //             indexed: true,
+  //             internalType: "address",
+  //             name: "contributor",
+  //             type: "address",
+  //           },
+  //           {
+  //             indexed: false,
+  //             internalType: "uint256",
+  //             name: "tipAmount",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         name: "ResourceTipped",
+  //         type: "event",
+  //       },
+  //       {
+  //         anonymous: false,
+  //         inputs: [
+  //           {
+  //             indexed: true,
+  //             internalType: "uint256",
+  //             name: "resourceId",
+  //             type: "uint256",
+  //           },
+  //           {
+  //             indexed: true,
+  //             internalType: "address",
+  //             name: "viewer",
+  //             type: "address",
+  //           },
+  //         ],
+  //         name: "ResourceViewed",
+  //         type: "event",
+  //       },
+  //       {
+  //         inputs: [],
+  //         name: "MIN_TIP_AMOUNT",
+  //         outputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [],
+  //         name: "USDE_PURCHASE_LINK",
+  //         outputs: [
+  //           {
+  //             internalType: "string",
+  //             name: "",
+  //             type: "string",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "uint8",
+  //             name: "_limit",
+  //             type: "uint8",
+  //           },
+  //         ],
+  //         name: "getTopContributors",
+  //         outputs: [
+  //           {
+  //             internalType: "address[]",
+  //             name: "contributors",
+  //             type: "address[]",
+  //           },
+  //           {
+  //             internalType: "uint256[]",
+  //             name: "tips",
+  //             type: "uint256[]",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [],
+  //         name: "getTotalResources",
+  //         outputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [],
+  //         name: "getUSDePurchaseLink",
+  //         outputs: [
+  //           {
+  //             internalType: "string",
+  //             name: "",
+  //             type: "string",
+  //           },
+  //         ],
+  //         stateMutability: "pure",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "address",
+  //             name: "_user",
+  //             type: "address",
+  //           },
+  //         ],
+  //         name: "getUserResources",
+  //         outputs: [
+  //           {
+  //             internalType: "uint256[]",
+  //             name: "",
+  //             type: "uint256[]",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         name: "resources",
+  //         outputs: [
+  //           {
+  //             internalType: "address",
+  //             name: "contributor",
+  //             type: "address",
+  //           },
+  //           {
+  //             internalType: "string",
+  //             name: "contentHash",
+  //             type: "string",
+  //           },
+  //           {
+  //             internalType: "uint256",
+  //             name: "tipsReceived",
+  //             type: "uint256",
+  //           },
+  //           {
+  //             internalType: "uint256",
+  //             name: "createdAt",
+  //             type: "uint256",
+  //           },
+  //           {
+  //             internalType: "uint256",
+  //             name: "viewCount",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "string",
+  //             name: "_contentHash",
+  //             type: "string",
+  //           },
+  //         ],
+  //         name: "shareResource",
+  //         outputs: [],
+  //         stateMutability: "nonpayable",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "_resourceId",
+  //             type: "uint256",
+  //           },
+  //           {
+  //             internalType: "uint256",
+  //             name: "_amount",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         name: "tipResource",
+  //         outputs: [],
+  //         stateMutability: "nonpayable",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "address",
+  //             name: "",
+  //             type: "address",
+  //           },
+  //         ],
+  //         name: "totalTipsReceived",
+  //         outputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [],
+  //         name: "usdeToken",
+  //         outputs: [
+  //           {
+  //             internalType: "contract IERC20",
+  //             name: "",
+  //             type: "address",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "address",
+  //             name: "",
+  //             type: "address",
+  //           },
+  //           {
+  //             internalType: "uint256",
+  //             name: "",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         name: "userResources",
+  //         outputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         stateMutability: "view",
+  //         type: "function",
+  //       },
+  //       {
+  //         inputs: [
+  //           {
+  //             internalType: "uint256",
+  //             name: "_resourceId",
+  //             type: "uint256",
+  //           },
+  //         ],
+  //         name: "viewResource",
+  //         outputs: [],
+  //         stateMutability: "nonpayable",
+  //         type: "function",
+  //       },
+  //     ],
+  //     inheritedFunctions: {},
+  //   },
+  // },
+  52085143: {
     TipHub: {
-      address: "0x12dB87BFB2c620Bd60f1364cDd8AC16cB0270Da7",
+      address: "0x2709132EC82DCae4B5c85034D76ac912237c8C13",
       abi: [
         {
           inputs: [
             {
               internalType: "address",
-              name: "_usdeTokenAddress",
+              name: "_usdeToken",
               type: "address",
             },
           ],
@@ -38,11 +366,23 @@ const deployedContracts = {
             {
               indexed: false,
               internalType: "string",
-              name: "contentHash",
+              name: "title",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "description",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "link",
               type: "string",
             },
           ],
-          name: "ResourceShared",
+          name: "ResourceAdded",
           type: "event",
         },
         {
@@ -69,36 +409,106 @@ const deployedContracts = {
             {
               indexed: false,
               internalType: "uint256",
-              name: "tipAmount",
+              name: "amount",
               type: "uint256",
             },
           ],
-          name: "ResourceTipped",
+          name: "TipSent",
           type: "event",
         },
         {
-          anonymous: false,
           inputs: [
             {
-              indexed: true,
-              internalType: "uint256",
-              name: "resourceId",
-              type: "uint256",
+              internalType: "string",
+              name: "_title",
+              type: "string",
             },
             {
-              indexed: true,
+              internalType: "string",
+              name: "_description",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_link",
+              type: "string",
+            },
+          ],
+          name: "addResource",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAllResources",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "string",
+                  name: "title",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "description",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "link",
+                  type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "contributor",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "tipsReceived",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct TipHub.Resource[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_resourceId",
+              type: "uint256",
+            },
+          ],
+          name: "getResource",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+            {
               internalType: "address",
-              name: "viewer",
+              name: "",
               type: "address",
             },
-          ],
-          name: "ResourceViewed",
-          type: "event",
-        },
-        {
-          inputs: [],
-          name: "MIN_TIP_AMOUNT",
-          outputs: [
             {
               internalType: "uint256",
               name: "",
@@ -106,69 +516,6 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "USDE_PURCHASE_LINK",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint8",
-              name: "_limit",
-              type: "uint8",
-            },
-          ],
-          name: "getTopContributors",
-          outputs: [
-            {
-              internalType: "address[]",
-              name: "contributors",
-              type: "address[]",
-            },
-            {
-              internalType: "uint256[]",
-              name: "tips",
-              type: "uint256[]",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getTotalResources",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "getUSDePurchaseLink",
-          outputs: [
-            {
-              internalType: "string",
-              name: "",
-              type: "string",
-            },
-          ],
-          stateMutability: "pure",
           type: "function",
         },
         {
@@ -179,7 +526,7 @@ const deployedContracts = {
               type: "address",
             },
           ],
-          name: "getUserResources",
+          name: "getUserContributions",
           outputs: [
             {
               internalType: "uint256[]",
@@ -201,45 +548,32 @@ const deployedContracts = {
           name: "resources",
           outputs: [
             {
-              internalType: "address",
-              name: "contributor",
-              type: "address",
+              internalType: "string",
+              name: "title",
+              type: "string",
             },
             {
               internalType: "string",
-              name: "contentHash",
+              name: "description",
               type: "string",
+            },
+            {
+              internalType: "string",
+              name: "link",
+              type: "string",
+            },
+            {
+              internalType: "address",
+              name: "contributor",
+              type: "address",
             },
             {
               internalType: "uint256",
               name: "tipsReceived",
               type: "uint256",
             },
-            {
-              internalType: "uint256",
-              name: "createdAt",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "viewCount",
-              type: "uint256",
-            },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "string",
-              name: "_contentHash",
-              type: "string",
-            },
-          ],
-          name: "shareResource",
-          outputs: [],
-          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -268,7 +602,26 @@ const deployedContracts = {
               type: "address",
             },
           ],
-          name: "totalTipsReceived",
+          name: "tipsGiven",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "tipsReceived",
           outputs: [
             {
               internalType: "uint256",
@@ -305,7 +658,7 @@ const deployedContracts = {
               type: "uint256",
             },
           ],
-          name: "userResources",
+          name: "userContributions",
           outputs: [
             {
               internalType: "uint256",
@@ -314,19 +667,6 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_resourceId",
-              type: "uint256",
-            },
-          ],
-          name: "viewResource",
-          outputs: [],
-          stateMutability: "nonpayable",
           type: "function",
         },
       ],

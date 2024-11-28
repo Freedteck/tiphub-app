@@ -1,167 +1,97 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.0;
 
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+interface IERC20 {
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+}
 
-/// @title TipHub - Developer Resource Sharing Platform MVP
 contract TipHub {
-    /// @notice Resource structure for shared content
     struct Resource {
-        address contributor;    // Creator of the resource
-        string contentHash;     // IPFS/content identifier
-        uint256 tipsReceived;   // Total USDe tips received
-        uint256 createdAt;      // Timestamp of resource creation
-        uint256 viewCount;      // Number of times resource viewed
+        string title;
+        string description;
+        string link; // Optional
+        address contributor;
+        uint256 tipsReceived;
     }
 
-    /// @notice Stores all resources
+    IERC20 public usdeToken; // USDe ERC-20 token
     Resource[] public resources;
+    mapping(address => uint256) public tipsGiven;
+    mapping(address => uint256) public tipsReceived;
+    mapping(address => uint256[]) public userContributions;
 
-    /// @notice Tracks resources per user
-    mapping(address => uint256[]) public userResources;
-
-    /// @notice Tracks total tips received by each contributor
-    mapping(address => uint256) public totalTipsReceived;
-
-    /// @notice USDe token contract interface
-    IERC20 public immutable usdeToken;
-
-    /// @notice Platform purchase link for USDe
-    string public constant USDE_PURCHASE_LINK = "https://app.sommelier.finance/";
-
-    /// @notice Minimum tip amount
-    uint256 public constant MIN_TIP_AMOUNT = 0.1 * 10**18; // 0.1 USDe
-
-    /// @notice Events for platform interactions
-    event ResourceShared(
-        uint256 indexed resourceId, 
-        address indexed contributor, 
-        string contentHash
+    event ResourceAdded(
+        uint256 indexed resourceId,
+        address indexed contributor,
+        string title,
+        string description,
+        string link
     );
-
-    event ResourceTipped(
+    event TipSent(
         uint256 indexed resourceId,
         address indexed tipper,
         address indexed contributor,
-        uint256 tipAmount
+        uint256 amount
     );
 
-    event ResourceViewed(
-        uint256 indexed resourceId,
-        address indexed viewer
-    );
-
-    /// @notice Constructor sets the USDe token address
-    /// @param _usdeTokenAddress Address of the USDe token contract
-    constructor(address _usdeTokenAddress) {
-        require(_usdeTokenAddress != address(0), "Invalid USDe token address");
-        usdeToken = IERC20(_usdeTokenAddress);
+    constructor(address _usdeToken) {
+        usdeToken = IERC20(_usdeToken);
     }
 
-    /// @notice Share a new developer resource
-    /// @param _contentHash IPFS hash or content identifier
-    function shareResource(string calldata _contentHash) external {
-        require(bytes(_contentHash).length > 0, "Content hash cannot be empty");
+    // Add a new resource
+    function addResource(
+        string calldata _title,
+        string calldata _description,
+        string calldata _link
+    ) external {
+        require(bytes(_title).length > 0, "Title cannot be empty");
+        require(bytes(_description).length > 0, "Description cannot be empty");
 
-        // Create new resource
+        // Allow empty link by skipping the `require` check
+
         resources.push(Resource({
+            title: _title,
+            description: _description,
+            link: _link,
             contributor: msg.sender,
-            contentHash: _contentHash,
-            tipsReceived: 0,
-            createdAt: block.timestamp,
-            viewCount: 0
+            tipsReceived: 0
         }));
+        userContributions[msg.sender].push(resources.length - 1);
 
-        // Track user's resources
-        uint256 newResourceId = resources.length - 1;
-        userResources[msg.sender].push(newResourceId);
-
-        emit ResourceShared(newResourceId, msg.sender, _contentHash);
+        emit ResourceAdded(resources.length - 1, msg.sender, _title, _description, _link);
     }
 
-    /// @notice Tip a resource using USDe
-    /// @param _resourceId ID of the resource to tip
-    /// @param _amount Amount of USDe to tip
+    // Tip a resource
     function tipResource(uint256 _resourceId, uint256 _amount) external {
         require(_resourceId < resources.length, "Invalid resource ID");
+        require(_amount > 0, "Tip amount must be greater than zero");
+
         Resource storage resource = resources[_resourceId];
-        
-        require(resource.contributor != msg.sender, "Cannot tip own resource");
-        require(_amount >= MIN_TIP_AMOUNT, "Tip amount too low");
+        require(resource.contributor != msg.sender, "Cannot tip your own resource");
 
-        // Transfer USDe from tipper to resource contributor
-        require(
-            usdeToken.transferFrom(msg.sender, resource.contributor, _amount),
-            "USDe transfer failed"
-        );
+        require(usdeToken.transferFrom(msg.sender, resource.contributor, _amount), "Token transfer failed");
 
-        // Update tip tracking
         resource.tipsReceived += _amount;
-        totalTipsReceived[resource.contributor] += _amount;
+        tipsGiven[msg.sender] += _amount;
+        tipsReceived[resource.contributor] += _amount;
 
-        emit ResourceTipped(_resourceId, msg.sender, resource.contributor, _amount);
+        emit TipSent(_resourceId, msg.sender, resource.contributor, _amount);
     }
 
-    /// @notice Record a resource view
-    /// @param _resourceId ID of the resource viewed
-    function viewResource(uint256 _resourceId) external {
+    // Get user contributions
+    function getUserContributions(address _user) external view returns (uint256[] memory) {
+        return userContributions[_user];
+    }
+
+    // Get all resources
+    function getAllResources() external view returns (Resource[] memory) {
+        return resources;
+    }
+
+    // Get specific resource details
+    function getResource(uint256 _resourceId) external view returns (string memory, string memory, string memory, address, uint256) {
         require(_resourceId < resources.length, "Invalid resource ID");
-        Resource storage resource = resources[_resourceId];
-        resource.viewCount++;
-
-        emit ResourceViewed(_resourceId, msg.sender);
-    }
-
-    /// @notice Retrieve purchase link for USDe
-    /// @return Link to purchase USDe tokens
-    function getUSDePurchaseLink() external pure returns (string memory) {
-        return USDE_PURCHASE_LINK;
-    }
-
-    /// @notice Retrieve all resources shared by a user
-    /// @param _user Address of the user
-    /// @return Array of resource IDs
-    function getUserResources(address _user) external view returns (uint256[] memory) {
-        return userResources[_user];
-    }
-
-    /// @notice Get top contributors based on tips received
-    /// @param _limit Number of top contributors to return
-    /// @return contributors Array of top contributor addresses
-    /// @return tips Corresponding array of total tips received
-    function getTopContributors(uint8 _limit) external view returns (
-        address[] memory contributors,
-        uint256[] memory tips
-    ) {
-        uint256 limit = _limit > 100 ? 100 : _limit;
-        contributors = new address[](limit);
-        tips = new uint256[](limit);
-
-        // Simple selection of top contributors
-        for (uint256 i = 0; i < resources.length; i++) {
-            address contributor = resources[i].contributor;
-            uint256 contributorTips = totalTipsReceived[contributor];
-
-            // Find placement in top contributors
-            for (uint256 j = 0; j < limit; j++) {
-                if (tips[j] < contributorTips) {
-                    // Shift existing entries
-                    for (uint256 k = limit - 1; k > j; k--) {
-                        tips[k] = tips[k-1];
-                        contributors[k] = contributors[k-1];
-                    }
-                    
-                    // Insert new top contributor
-                    tips[j] = contributorTips;
-                    contributors[j] = contributor;
-                    break;
-                }
-            }
-        }
-    }
-
-    /// @notice Get total number of resources on the platform
-    function getTotalResources() external view returns (uint256) {
-        return resources.length;
+        Resource memory resource = resources[_resourceId];
+        return (resource.title, resource.description, resource.link, resource.contributor, resource.tipsReceived);
     }
 }

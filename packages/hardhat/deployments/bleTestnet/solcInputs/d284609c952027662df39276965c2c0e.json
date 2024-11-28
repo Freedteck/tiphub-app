@@ -1,0 +1,36 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/TipHub.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ninterface IERC20 {\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\n}\n\ncontract TipHub {\n    struct Resource {\n        string title;\n        string description;\n        string link; // Optional\n        address contributor;\n        uint256 tipsReceived;\n    }\n\n    IERC20 public usdeToken; // USDe ERC-20 token\n    Resource[] public resources;\n    mapping(address => uint256) public tipsGiven;\n    mapping(address => uint256) public tipsReceived;\n    mapping(address => uint256[]) public userContributions;\n\n    event ResourceAdded(\n        uint256 indexed resourceId,\n        address indexed contributor,\n        string title,\n        string description,\n        string link\n    );\n    event TipSent(\n        uint256 indexed resourceId,\n        address indexed tipper,\n        address indexed contributor,\n        uint256 amount\n    );\n\n    constructor(address _usdeToken) {\n        usdeToken = IERC20(_usdeToken);\n    }\n\n    // Add a new resource\n    function addResource(\n        string calldata _title,\n        string calldata _description,\n        string calldata _link\n    ) external {\n        require(bytes(_title).length > 0, \"Title cannot be empty\");\n        require(bytes(_description).length > 0, \"Description cannot be empty\");\n\n        // Allow empty link by skipping the `require` check\n\n        resources.push(Resource({\n            title: _title,\n            description: _description,\n            link: _link,\n            contributor: msg.sender,\n            tipsReceived: 0\n        }));\n        userContributions[msg.sender].push(resources.length - 1);\n\n        emit ResourceAdded(resources.length - 1, msg.sender, _title, _description, _link);\n    }\n\n    // Tip a resource\n    function tipResource(uint256 _resourceId, uint256 _amount) external {\n        require(_resourceId < resources.length, \"Invalid resource ID\");\n        require(_amount > 0, \"Tip amount must be greater than zero\");\n\n        Resource storage resource = resources[_resourceId];\n        require(resource.contributor != msg.sender, \"Cannot tip your own resource\");\n\n        require(usdeToken.transferFrom(msg.sender, resource.contributor, _amount), \"Token transfer failed\");\n\n        resource.tipsReceived += _amount;\n        tipsGiven[msg.sender] += _amount;\n        tipsReceived[resource.contributor] += _amount;\n\n        emit TipSent(_resourceId, msg.sender, resource.contributor, _amount);\n    }\n\n    // Get user contributions\n    function getUserContributions(address _user) external view returns (uint256[] memory) {\n        return userContributions[_user];\n    }\n\n    // Get all resources\n    function getAllResources() external view returns (Resource[] memory) {\n        return resources;\n    }\n\n    // Get specific resource details\n    function getResource(uint256 _resourceId) external view returns (string memory, string memory, string memory, address, uint256) {\n        require(_resourceId < resources.length, \"Invalid resource ID\");\n        Resource memory resource = resources[_resourceId];\n        return (resource.title, resource.description, resource.link, resource.contributor, resource.tipsReceived);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

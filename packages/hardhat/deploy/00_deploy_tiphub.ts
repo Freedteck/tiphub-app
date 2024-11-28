@@ -7,7 +7,7 @@ const deployTipHub: DeployFunction = async function (hre: HardhatRuntimeEnvironm
   const { deploy } = hre.deployments;
 
   // Assuming USDe token address is known - replace with actual address
-  const USDE_TOKEN_ADDRESS = "0xf805ce4F96e0EdD6f0b6cd4be22B34b92373d696"; 
+  const USDE_TOKEN_ADDRESS = "0x426E7d03f9803Dd11cb8616C65b99a3c0AfeA6dE";
 
   await deploy("TipHub", {
     from: deployer,
@@ -23,4 +23,4 @@ const deployTipHub: DeployFunction = async function (hre: HardhatRuntimeEnvironm
 export default deployTipHub;
 deployTipHub.tags = ["TipHub"];
 
-packages/nextjs/app/blockexplorer/_components/AddressCodeTab.tsx
+// packages / nextjs / app / blockexplorer / _components / AddressCodeTab.tsx;
