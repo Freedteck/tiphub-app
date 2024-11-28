@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import NewResources from "~~/components/NewResources";
-import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface Resource {
   id: number;
@@ -17,10 +17,13 @@ interface Resource {
 const Resources = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [showNewResourceForm, setShowNewResourceForm] = useState(false);
+
   const { data } = useScaffoldReadContract({
     contractName: "TipHub",
     functionName: "getAllResources",
   });
+
+  const { writeContractAsync: addToResources } = useScaffoldWriteContract("TipHub");
 
   useEffect(() => {
     if (data) {
@@ -37,15 +40,15 @@ const Resources = () => {
     setShowNewResourceForm(true);
   };
 
-  const handleAddResource = (newResource: Omit<Resource, "id" | "tipsReceived">) => {
-    setResources(prevResources => [
-      ...prevResources,
-      {
-        id: prevResources.length + 1,
-        tipsReceived: 0,
-        ...newResource,
-      },
-    ]);
+  const handleAddResource = async (newResource: any) => {
+    try {
+      await addToResources({
+        functionName: "addResource",
+        args: [newResource.title, newResource.description, newResource.link],
+      });
+    } catch (e) {
+      console.error("Error setting greeting:", e);
+    }
     setShowNewResourceForm(false);
   };
 
