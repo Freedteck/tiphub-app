@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   // 11155111: {
   //   TipHub: {
-  //     address: "0x2709132EC82DCae4B5c85034D76ac912237c8C13",
+  //     address: "0x12dB87BFB2c620Bd60f1364cDd8AC16cB0270Da7",
   //     abi: [
   //       {
   //         inputs: [
@@ -335,7 +335,7 @@ const deployedContracts = {
   // },
   52085143: {
     TipHub: {
-      address: "0x2709132EC82DCae4B5c85034D76ac912237c8C13",
+      address: "0xC092864C42548e233e842c013c5e5b55c31cC71b",
       abi: [
         {
           inputs: [
@@ -509,6 +509,25 @@ const deployedContracts = {
               name: "",
               type: "address",
             },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_user",
+              type: "address",
+            },
+          ],
+          name: "getUsdeTokenBalance",
+          outputs: [
             {
               internalType: "uint256",
               name: "",

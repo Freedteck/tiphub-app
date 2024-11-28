@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 interface IERC20 {
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    function balanceOf(address account) external view returns (uint256); // Add balanceOf function
 }
 
 contract TipHub {
@@ -46,8 +47,6 @@ contract TipHub {
     ) external {
         require(bytes(_title).length > 0, "Title cannot be empty");
         require(bytes(_description).length > 0, "Description cannot be empty");
-
-        // Allow empty link by skipping the `require` check
 
         resources.push(Resource({
             title: _title,
@@ -93,5 +92,10 @@ contract TipHub {
         require(_resourceId < resources.length, "Invalid resource ID");
         Resource memory resource = resources[_resourceId];
         return (resource.title, resource.description, resource.link, resource.contributor, resource.tipsReceived);
+    }
+
+    // Get the balance of USDe token for a specific address
+    function getUsdeTokenBalance(address _user) external view returns (uint256) {
+        return usdeToken.balanceOf(_user); // Get the balance of the user
     }
 }
