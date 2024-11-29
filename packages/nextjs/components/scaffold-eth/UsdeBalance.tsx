@@ -48,7 +48,7 @@ export const UsdeBalance = ({ address, className = "" }: BalanceProps) => {
       <div className="w-full flex items-center justify-center">
         <>
           <span>{formattedBalance.toFixed(2)}</span>
-          <span className="text-[0.8em] font-bold ml-1">{"USDE"}</span>
+          <span className="text-[0.8em] font-bold ml-1">{"USDe"}</span>
         </>
       </div>
     </button>

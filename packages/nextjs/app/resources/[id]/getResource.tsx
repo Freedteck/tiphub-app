@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useEnsAvatar } from "wagmi";
+import TipModal from "~~/components/TipModal";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
-// Define a type for the resource
 type Resource = [string, string, string, string];
 
 const ResourcePage = ({ resourceId }: any) => {
   const [resource, setResource] = useState<Resource | null>(null);
+  const [isTipModalOpen, setIsTipModalOpen] = useState(false);
 
   const { data: ensAvatar } = useEnsAvatar({ universalResolverAddress: resource?.[3] || "" });
   const { data, isLoading, isError }: any = useScaffoldReadContract({
@@ -46,8 +47,37 @@ const ResourcePage = ({ resourceId }: any) => {
         )}
         <p className="text-lg">{resource?.[1]}</p>
       </div>
-      <hr className="bg-primary" />
-      <div></div>
+      <div className="h-[2px] bg-base-100 my-6"></div>
+      <div className="flex justify-between items-center container mx-auto">
+        <button
+          onClick={() => setIsTipModalOpen(true)}
+          className="bg-primary text-primary-content px-6 py-2 rounded-lg shadow hover:bg-primary-focus transition"
+        >
+          Send a Tip
+        </button>
+        <div className="flex gap-4">
+          <a
+            href={`https://twitter.com/intent/tweet?text=Check out this resource: ${resource?.[0]}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline"
+          >
+            Share on Twitter
+          </a>
+          <a
+            href="#"
+            className="text-primary underline"
+            onClick={e => {
+              e.preventDefault();
+              navigator.clipboard.writeText(window.location.href);
+              alert("Link copied to clipboard!");
+            }}
+          >
+            Copy Link
+          </a>
+        </div>
+      </div>
+      {isTipModalOpen && <TipModal closeModal={() => setIsTipModalOpen(false)} resourceId={resourceId} />}
     </main>
   );
 };
