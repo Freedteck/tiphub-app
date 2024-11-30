@@ -83,7 +83,7 @@ const Profile = () => {
       <h2 className="text-center font-bold text-3xl">My Profile</h2>
       <div className="container mx-auto p-8 flex flex-col gap-12">
         <div className="flex items-center gap-8 bg-base-100 p-8">
-          <div className="flex flex-col items-center gap-6 border rounded-lg p-8 w-full">
+          <div className="bg-neutral flex flex-col items-center gap-6 border rounded-lg p-8 w-full">
             <BlockieAvatar address={address || ""} size={64} ensImage={ensAvatar || ""} />
             <span className="text-lg flex gap-4 items-center">
               Address: {address?.slice(0, 6) + "..." + address?.slice(-4)}{" "}
@@ -97,13 +97,13 @@ const Profile = () => {
               )}
             </span>
           </div>
-          <div className="flex flex-col items-center gap-3 border rounded-lg p-8 w-full">
+          <div className="bg-neutral flex flex-col items-center gap-3 border rounded-lg p-8 w-full">
             <h3 className="text-center font-bold text-2xl mb-8">Token Balance</h3>
             <span className="text-4xl font-bold">
               {tokenBalance} <span className="text-primary">USDe</span>
             </span>
           </div>
-          <div className="flex flex-col items-center gap-3 border rounded-lg p-8 w-full">
+          <div className="bg-neutral flex flex-col items-center gap-3 border rounded-lg p-8 w-full">
             <h3 className="text-center font-bold text-2xl mb-8">Total Tips Earned</h3>
             <span className="text-lg">{tipsReceived} USDe</span>
           </div>
