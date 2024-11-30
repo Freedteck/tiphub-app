@@ -1,7 +1,8 @@
 "use client";
 
 // @refresh reset
-import { Balance } from "../Balance";
+// import { Balance } from "../Balance";
+import { UsdeBalance } from "../UsdeBalance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
@@ -42,7 +43,8 @@ export const RainbowKitCustomConnectButton = () => {
               return (
                 <>
                   <div className="flex flex-col items-center mr-1">
-                    <Balance address={account.address as Address} className="min-h-0 h-auto font-medium text-lg" />
+                    {/* <Balance address={account.address as Address} className="min-h-0 h-auto font-medium text-lg" /> */}
+                    <UsdeBalance address={account.address as Address} className="min-h-0 h-auto font-medium text-lg" />
                   </div>
                   <AddressInfoDropdown
                     address={account.address as Address}

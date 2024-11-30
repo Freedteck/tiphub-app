@@ -1,8 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEnsAvatar } from "wagmi";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import NewResources from "~~/components/NewResources";
+import { BlockieAvatar } from "~~/components/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface Resource {
   id: number;
@@ -13,81 +17,61 @@ interface Resource {
   tipsReceived: number;
 }
 
-const initialResources = [
-  {
-    id: 1,
-    title: "Resource 1",
-    description: "This is a great resource for learning JavaScript.",
-    link: "https://example.com/resource-1",
-    contributor: "0x1234...abcd",
-    tipsReceived: 1.2,
-  },
-  {
-    id: 2,
-    title: "Resource 2",
-    description: "An excellent guide for mastering React.",
-    link: "https://example.com/resource-2",
-    contributor: "0x5678...efgh",
-    tipsReceived: 0.8,
-  },
-  {
-    id: 3,
-    title: "Resource 3",
-    description: "A must-read for anyone interested in blockchain development.",
-    link: "https://example.com/resource-3",
-    contributor: "0x9abc...ijkl",
-    tipsReceived: 2.5,
-  },
-  {
-    id: 4,
-    title: "Resource 4",
-    description: "A comprehensive tutorial on building web3 applications.",
-    link: "https://example.com/resource-4",
-    contributor: "0xdef0...mnop",
-    tipsReceived: 1.0,
-  },
-  {
-    id: 5,
-    title: "Resource 5",
-    description: "Learn how to deploy smart contracts on Ethereum.",
-    link: "https://example.com/resource-5",
-    contributor: "0x1234...abcd",
-    tipsReceived: 1.8,
-  },
-  {
-    id: 6,
-    title: "Resource 6",
-    description: "A collection of useful tools for frontend developers.",
-    link: "https://example.com/resource-6",
-    contributor: "0x5678...efgh",
-    tipsReceived: 0.5,
-  },
-  // Add more resources as needed
-];
-
 const Resources = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [showNewResourceForm, setShowNewResourceForm] = useState(false);
+  const [userAddress, setUserAddress] = useState("");
+  const { data: ensAvatar } = useEnsAvatar({ universalResolverAddress: userAddress || "" });
+
+  const { data, isLoading, isError } = useScaffoldReadContract({
+    contractName: "TipHub",
+    functionName: "getAllResources",
+  });
+
+  const { writeContractAsync: addToResources } = useScaffoldWriteContract("TipHub");
 
   useEffect(() => {
-    setResources(initialResources);
-  }, []);
+    if (data) {
+      const modifiedDataWithId = data.map((dataItem: any, index: number) => {
+        dataItem["id"] = index;
+        return dataItem;
+      });
+
+      setResources(modifiedDataWithId);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      resources.map(resource => {
+        setUserAddress(resource.contributor);
+      });
+    }
+  }, [data, resources]);
 
   const handleCreateResource = () => {
     setShowNewResourceForm(true);
   };
 
-  const handleAddResource = (newResource: Omit<Resource, "id" | "tipsReceived">) => {
-    setResources(prevResources => [
-      ...prevResources,
-      {
-        id: prevResources.length + 1,
-        tipsReceived: 0,
-        ...newResource,
-      },
-    ]);
+  const handleAddResource = async (newResource: any) => {
+    try {
+      await addToResources({
+        functionName: "addResource",
+        args: [newResource.title, newResource.description, newResource.link],
+      });
+    } catch (e) {
+      console.error("Error setting greeting:", e);
+    }
     setShowNewResourceForm(false);
   };
+
+  if (isLoading) {
+    return <div className="p-6 flex flex-col gap-8">Loading...</div>;
+  }
+
+  if (isError) {
+    return <div className="p-6 flex flex-col gap-8">Error fetching resources</div>;
+  }
 
   return (
     <main className="p-6 flex flex-col gap-8">
@@ -104,15 +88,21 @@ const Resources = () => {
 
       <ul className="bg-base-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-16">
         {resources.map(resource => (
-          <li key={resource.id} className="bg-neutral border shadow rounded-lg p-8 hover:shadow-xl transition">
+          <li
+            key={resource.id}
+            className="bg-neutral flex flex-col gap-6 border shadow rounded-lg p-8 hover:shadow-xl transition"
+          >
+            <div className="flex items-center gap-3">
+              <BlockieAvatar address={resource.contributor} size={40} ensImage={ensAvatar} />
+              <span className="text-lg">
+                {resource.contributor?.slice(0, 6) + "..." + resource.contributor?.slice(-4)}
+              </span>
+            </div>
             <h3 className="text-2xl font-semibold">{resource.title}</h3>
             <p className="text-sm">{resource.description}</p>
-            <div className="flex justify-between items-center mt-4">
-              <p className="text-sm text-gray-600">By: {resource.contributor}</p>
-            </div>
-            <a href={`resources/${resource.id}`} className="text-primary underline mt-2 inline-block">
+            <Link href={`resources/${resource.id}`} className="text-primary underline mt-2 inline-block">
               View More &rarr;
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

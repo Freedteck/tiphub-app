@@ -2,7 +2,7 @@
 
 interface NewResourcesProps {
   closeForm: () => void;
-  addResource: (newResource: { title: string; description: string; link: string; contributor: string }) => void;
+  addResource: (newResource: { title: string; description: string; link: string }) => void;
 }
 
 const NewResources = ({ closeForm, addResource }: NewResourcesProps) => {
@@ -13,7 +13,6 @@ const NewResources = ({ closeForm, addResource }: NewResourcesProps) => {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       link: formData.get("link") as string,
-      contributor: "0x0000...abcd",
     };
     addResource(newResource);
   };
