@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { formatEther } from "viem";
 import { useAccount, useEnsAvatar } from "wagmi";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 const Profile = () => {
   const [tokenBalance, setTokenBalance] = useState(0);
   const [tipsReceived, setTipsReceived] = useState(0);
+  const [isCopied, setIsCopied] = useState(false);
   const [resources, setResources] = useState<any>([]);
   const { address } = useAccount();
   const { data: ensAvatar } = useEnsAvatar({ universalResolverAddress: address });
@@ -61,6 +64,20 @@ const Profile = () => {
     }
   }, [address, data]);
 
+  const handleCopy = () => {
+    if (address) {
+      navigator.clipboard
+        .writeText(address)
+        .then(() => {
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 2000);
+        })
+        .catch(err => {
+          console.error("Failed to copy address:", err);
+        });
+    }
+  };
+
   return (
     <main className="flex flex-col gap-8 p-8">
       <h2 className="text-center font-bold text-3xl">My Profile</h2>
@@ -68,7 +85,17 @@ const Profile = () => {
         <div className="flex items-center gap-8 bg-base-100 p-8">
           <div className="flex flex-col items-center gap-6 border rounded-lg p-8 w-full">
             <BlockieAvatar address={address || ""} size={64} ensImage={ensAvatar || ""} />
-            <span className="text-lg">Address: {address?.slice(0, 6) + "..." + address?.slice(-4)}</span>
+            <span className="text-lg flex gap-4 items-center">
+              Address: {address?.slice(0, 6) + "..." + address?.slice(-4)}{" "}
+              {!isCopied ? (
+                <DocumentDuplicateIcon
+                  className="text-3xl font-normal h-8 w-6 cursor-pointer ml-2 sm:ml-0 hover:text-primary"
+                  onClick={handleCopy}
+                />
+              ) : (
+                <CheckCircleIcon className="text-3xl font-normal h-8 w-6 text-green-500 ml-2 sm:ml-0" />
+              )}
+            </span>
           </div>
           <div className="flex flex-col items-center gap-3 border rounded-lg p-8 w-full">
             <h3 className="text-center font-bold text-2xl mb-8">Token Balance</h3>
