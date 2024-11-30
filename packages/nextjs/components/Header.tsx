@@ -23,10 +23,10 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "Resources",
     href: "/resources",
   },
-  {
-    label: "About",
-    href: "/about",
-  },
+  // {
+  //   label: "About",
+  //   href: "/about",
+  // },
   {
     label: "Leaderboard",
     href: "/leaderboard",
