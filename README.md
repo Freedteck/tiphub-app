@@ -1,4 +1,4 @@
-![Screenshot 2024-12-01 130011](https://github.com/user-attachments/assets/d3d22964-a6cc-4f8f-a6c0-a2e4629d5f96)# TipHub: Rewarding Developers for Sharing Knowledge
+# TipHub: Rewarding Developers for Sharing Knowledge
 
 ## 🚀 Purpose
 TipHub is a revolutionary platform designed to reward developers for sharing valuable knowledge and resources. Our mission is to create a collaborative ecosystem where developers can:
