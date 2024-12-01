@@ -37,7 +37,8 @@ TipHub is a revolutionary platform designed to reward developers for sharing val
   2. Find a valuable contribution
   3. Click "Send a Tip" button![Screenshot 2024-12-01 130011](https://github.com/user-attachments/assets/bde21b4d-b73d-4c5e-9ad5-59c826d65522)
 
-  4. Confirm USDe tip amount![Uploading Screenshot 2024-12-01 130220.png…]()
+  4. Confirm USDe tip amount![Uploading Screenshot 2024-12-01 130631.png…]()
+
 
   5. Complete the transaction
 
