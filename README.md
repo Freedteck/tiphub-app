@@ -1,9 +1,58 @@
-# 🏗 Scaffold-ETH 2
+# TipHub: Rewarding Developers for Sharing Knowledge
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+## 🚀 Purpose
+TipHub is a revolutionary platform designed to reward developers for sharing valuable knowledge and resources. Our mission is to create a collaborative ecosystem where developers can:
+
+- Share code snippets, tutorials, and technical solutions
+- Earn USDe tips for high-quality contributions
+- Connect with a community of passionate tech professionals
+
+## 💡 Key Features
+🔍 Resource Sharing: Upload and discover code snippets, tutorials, and technical solutions
+💰 Reward System: Earn USDe tips for valuable contributions
+
+## 💻 Getting Started
+  ### Prerequisites
+  1. Ethereum-compatible wallet (MetaMask, WalletConnect, etc.)
+  2. Basic understanding of web3 technologies
+
+   #### Wallet Connection
+  1.  Visit [TipHub App](https://tiphub-phi.vercel.app/)
+  2. Click "Connect Wallet"
+  3. Select your preferred wallet provider
+  4. Sign the connection request
+
+  #### To Contribute Resources
+  1. Connect your wallet
+  2. Navigate to "Resources"
+  3. Click on create
+  4. Fill in resource details ( Title, link, description)
+  5. Sign the transaction to publish
+  #### Tipping
+  1. Browse resources
+  2. Find a valuable contribution
+  3. Click "Tip" button
+  4. Confirm USDe tip amount
+  5. Complete the transaction
+
+  ## 💸 Economic Model
+
+  - Accessing resources is free
+  - Tipping and contributions require gas fees
+  - Tips are processed in USDe, Ethena's stable asset
+
+## USDe Vision
+TipHub believes in USDe as a core asset for the Internet Economy, extending beyond DeFi to payments, social networks, and innovative platforms.
+
+
+## 🔧 Development
+Powered by Scaffold-ETH 2, our platform offers:
+
+Hot Contract Reloading
+Custom Web3 Hooks
+Wallet Provider Integrations
+Local Development Environment
+
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
 
