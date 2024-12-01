@@ -43,7 +43,39 @@ TipHub is a revolutionary platform designed to reward developers for sharing val
 
 ## USDe Vision
 TipHub believes in USDe as a core asset for the Internet Economy, extending beyond DeFi to payments, social networks, and innovative platforms.
+##  Future Roadmap and Improvements
+#### Making Crypto Accessible: Account Abstraction (AA) Initiatives
+  We're committed to lowering barriers to entry for non-crypto-native developers through innovative features:
+  1. Simplified Onboarding
+      Gasless Transactions: Implement Account Abstraction (AA) to:
+       - Allow users to create and use accounts without upfront ETH for gas
+       - Sponsor initial transactions for new users
+       - Enable email or social media sign-ups with embedded wallets
 
+ 2. Web3 Education Hub
+    Learning Pathways: Integrated educational resources to help developers:
+    - Understand blockchain basics
+    - Learn about cryptocurrency and web3 technologies
+    - Navigate wallet management and transactions
+
+3. User-Friendly Crypto Interactions
+    Simplified Tipping Mechanism:
+   - Fiat on-ramp integrations
+   - One-click USDe top-up
+   - Clear gas fee estimations and explanations
+
+4. Inclusive Design Features
+    Wallet Abstraction:
+    - Multi-chain support
+    - Easy wallet recovery options
+    - Intuitive interface for managing crypto assets
+
+
+Why These Improvements Matter
+- Make web3 technologies more approachable, a win here is also a win for ethena
+- better improve use and utilization of USDe
+- Empower developers of all skill levels
+- Create a truly inclusive platform for technical knowledge exchange
 
 ## 🔧 Development
 Powered by Scaffold-ETH 2, our platform offers:
