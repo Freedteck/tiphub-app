@@ -1,4 +1,4 @@
-# TipHub: Rewarding Developers for Sharing Knowledge
+![Screenshot 2024-12-01 130011](https://github.com/user-attachments/assets/d3d22964-a6cc-4f8f-a6c0-a2e4629d5f96)# TipHub: Rewarding Developers for Sharing Knowledge
 
 ## 🚀 Purpose
 TipHub is a revolutionary platform designed to reward developers for sharing valuable knowledge and resources. Our mission is to create a collaborative ecosystem where developers can:
@@ -17,22 +17,28 @@ TipHub is a revolutionary platform designed to reward developers for sharing val
   2. Basic understanding of web3 technologies
 
    #### Wallet Connection
-  1.  Visit [TipHub App](https://tiphub-phi.vercel.app/)
-  2. Click "Connect Wallet"
-  3. Select your preferred wallet provider
+  1. Visit [TipHub App](https://tiphub-phi.vercel.app/)
+  2. Click "Connect Wallet"![Screenshot 2024-12-01 125155](https://github.com/user-attachments/assets/999bbf9a-33e4-4365-9b9d-1583fc9d272d)
+
+  3. Select your preferred wallet provider ![Screenshot 2024-12-01 125357](https://github.com/user-attachments/assets/c17edcc0-4866-429a-a2ed-7f8eb9e4772e)
+
   4. Sign the connection request
 
   #### To Contribute Resources
   1. Connect your wallet
-  2. Navigate to "Resources"
+  2. Navigate to "Resources"![Screenshot 2024-12-01 125558](https://github.com/user-attachments/assets/d8b2cbd6-05ba-4a42-a8ef-a648884dc385)
+
   3. Click on create
-  4. Fill in resource details ( Title, link, description)
+  4. Fill in resource details ( Title, link, description)![Screenshot 2024-12-01 125735](https://github.com/user-attachments/assets/78d87b5a-8ffb-49d3-b231-a212a50507b2)
+
   5. Sign the transaction to publish
   #### Tipping
   1. Browse resources
   2. Find a valuable contribution
-  3. Click "Tip" button
-  4. Confirm USDe tip amount
+  3. Click "Send a Tip" button![Screenshot 2024-12-01 130011](https://github.com/user-attachments/assets/bde21b4d-b73d-4c5e-9ad5-59c826d65522)
+
+  4. Confirm USDe tip amount![Uploading Screenshot 2024-12-01 130220.png…]()
+
   5. Complete the transaction
 
   ## 💸 Economic Model
